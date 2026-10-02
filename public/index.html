@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Playlist ♡ เพลงที่ฉันชอบ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ลายโดเดิลดาว/หัวใจด้านหลัง (สร้างด้วย app.js) -->
+  <div class="doodles" id="doodles" aria-hidden="true"></div>
+
+
+  <main class="layout">
+    <!-- ===== ฝั่งซ้าย: ปก playlist ===== -->
+    <aside class="left">
+      <div class="album">
+        <svg viewBox="0 0 400 400" class="album-art" aria-label="ปก My Playlist">
+          <defs>
+            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M20 0H0V20" fill="none" stroke="#dfe7f2" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="400" fill="#fbfaf6"/>
+          <rect width="400" height="400" fill="url(#grid)"/>
+          <!-- เทปคาสเซ็ต -->
+          <g transform="translate(206 44) rotate(8)">
+            <rect width="150" height="96" rx="10" fill="#fff" stroke="#111" stroke-width="3"/>
+            <rect x="14" y="14" width="122" height="40" rx="6" fill="#ffd9e6" stroke="#111" stroke-width="2.5"/>
+            <circle cx="48" cy="34" r="11" fill="#fff" stroke="#111" stroke-width="2.5"/>
+            <circle cx="102" cy="34" r="11" fill="#fff" stroke="#111" stroke-width="2.5"/>
+            <path d="M30 88l12-22h66l12 22" fill="none" stroke="#111" stroke-width="2.5"/>
+          </g>
+          <!-- ป้ายสติกเกอร์ -->
+          <g transform="translate(34 60) rotate(-7)">
+            <rect width="108" height="44" rx="4" fill="#bfe8c3" stroke="#111" stroke-width="2.5"/>
+            <text x="54" y="30" text-anchor="middle" font-family="Inter" font-weight="800" font-size="20" fill="#111">TOP 33</text>
+          </g>
+          <!-- ตัวหนังสือเขียนมือ -->
+          <g transform="rotate(-6 200 220)" font-family="Gochi Hand" font-size="76" text-anchor="middle">
+            <text x="200" y="232" fill="#fff" stroke="#111" stroke-width="10" stroke-linejoin="round">My Playlist!</text>
+            <text x="200" y="232" fill="#fff">My Playlist!</text>
+          </g>
+          <!-- โน้ตดนตรี -->
+          <g fill="#111"><ellipse cx="70" cy="330" rx="15" ry="11" transform="rotate(-20 70 330)"/><rect x="82" y="262" width="5" height="68"/><path d="M87 262c18 6 26 18 22 34-3-12-10-18-22-20z"/></g>
+          <g fill="#111"><ellipse cx="322" cy="330" rx="12" ry="9" transform="rotate(-20 322 330)"/><ellipse cx="362" cy="318" rx="12" ry="9" transform="rotate(-20 362 318)"/><rect x="332" y="276" width="4.5" height="54"/><rect x="372" y="264" width="4.5" height="54"/><path d="M332 276l44-12v10l-44 12z"/></g>
+          <!-- ดาว / หัวใจ -->
+          <path d="M150 300l7 15 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z" fill="#6fa8f5" stroke="#111" stroke-width="2"/>
+          <path d="M250 312l6 12 13 2-10 9 3 13-12-7-11 7 2-13-9-9 13-2z" fill="#f5d94e" stroke="#111" stroke-width="2"/>
+          <path d="M46 172c-9-13 8-24 15-11 7-13 24-2 15 11l-15 15z" fill="#e9545c" stroke="#111" stroke-width="2"/>
+          <text x="200" y="380" text-anchor="middle" font-family="Gochi Hand" font-size="22" fill="#444">♪ curated by me ♪</text>
+        </svg>
+      </div>
+      <h1 class="pl-title">My Playlist</h1>
+      <p class="pl-sub" id="plSub">เพลงที่ฉันชอบ</p>
+      <div class="pl-btns">
+        <button class="pill-btn" id="playAll">▶&nbsp; Play</button>
+        <button class="pill-btn" id="shuffleBtn">⤮&nbsp; Shuffle</button>
+      </div>
+
+      <div class="tools">
+        <label class="search"><span>⌕</span><input id="search" type="search" placeholder="ค้นหาเพลงหรือศิลปิน" /></label>
+        <div class="tools-row">
+          <select id="sort" title="เรียงลำดับ">
+            <option value="title" selected>เรียง: ชื่อเพลง A–Z</option>
+            <option value="artist">เรียง: ศิลปิน A–Z</option>
+            <option value="">เรียง: ลำดับที่เพิ่ม</option>
+          </select>
+          <button class="add-btn" id="openAdd">＋ เพิ่มเพลง</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== ฝั่งขวา ===== -->
+    <section class="right">
+      <div class="notif">
+        <div class="app-ico">♪</div>
+        <div class="n-body">
+          <div class="n-head"><b>My Playlist</b><span>now</span></div>
+          <div class="n-msg" id="stats">กำลังโหลดเพลง...</div>
+        </div>
+      </div>
+
+      <div class="folders" id="folders"></div>
+
+      <div class="list-head">
+        <h2 id="listTitle">เพลงทั้งหมด</h2>
+        <span id="listCount"></span>
+      </div>
+      <ul class="songs" id="songList"></ul>
+      <p class="empty hidden" id="empty">ไม่มีเพลงที่ตรงกับตัวกรอง ✦</p>
+    </section>
+  </main>
+
+  <!-- ===== Now playing ===== -->
+  <footer class="dock">
+    <div class="player">
+      <div class="np-cover" id="npCover">♪</div>
+      <div class="np-text">
+        <div class="np-title" id="npTitle">เลือกเพลงที่อยากฟัง</div>
+        <div class="np-artist" id="npArtist">คลิกที่เพลงในรายการ</div>
+      </div>
+      <button class="ctl" id="prevBtn" title="เพลงก่อนหน้า">
+        <svg viewBox="0 0 24 24"><path d="M11 6v12L2.5 12zM21 6v12l-8.5-6z"/></svg>
+      </button>
+      <button class="ctl big" id="playBtn" title="ฟังเพลงนี้ใน Spotify">
+        <svg viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z"/></svg>
+      </button>
+      <button class="ctl" id="nextBtn" title="เพลงถัดไป">
+        <svg viewBox="0 0 24 24"><path d="M13 6v12l8.5-6zM3 6v12l8.5-6z"/></svg>
+      </button>
+      <a class="sp-btn off" id="spOpen" href="#" target="_blank" rel="noopener">Spotify ↗</a>
+    </div>
+    <div class="swipe">กดที่เพลงเพื่อเปิดฟังใน Spotify</div>
+    <div class="home-bar"></div>
+  </footer>
+
+  <!-- ===== ฟอร์มเพิ่ม / แก้ไข ===== -->
+  <dialog id="songDialog">
+    <form id="songForm" novalidate>
+      <div class="sheet-head">
+        <button type="button" class="link-btn" id="cancelBtn">ยกเลิก</button>
+        <h2 id="formTitle">เพิ่มเพลงใหม่</h2>
+        <span class="spacer"></span>
+      </div>
+      <input type="hidden" id="songId" />
+      <div class="group">
+        <label>ชื่อเพลง <b>*</b><input id="title" placeholder="เช่น Style" /></label>
+        <label>ศิลปิน <b>*</b><input id="artist" placeholder="เช่น Taylor Swift" /></label>
+        <label>แนวเพลง <b>*</b><input id="genre" list="genreList" placeholder="เช่น Pop, Indie Rock" /></label>
+        <datalist id="genreList"></datalist>
+      </div>
+      <div class="group">
+        <label>ลิงก์ Spotify <small>(ไม่ใส่ก็ได้)</small><input id="spotifyUrl" placeholder="https://open.spotify.com/track/..." /></label>
+      </div>
+      <button type="submit" class="submit" id="submitBtn">เพิ่มเพลง</button>
+    </form>
+  </dialog>
+
+  <!-- การแจ้งเตือนแบบ iOS (ใช้แทน toast) -->
+  <div class="toast notif" id="toast">
+    <div class="app-ico">♪</div>
+    <div class="n-body">
+      <div class="n-head"><b>My Playlist</b><span>now</span></div>
+      <div class="n-msg" id="toastMsg"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
